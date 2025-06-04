@@ -6,7 +6,7 @@ Prosta aplikacja do inwentaryzacji oparta na Vue 3 + Vite. Umożliwia skanowanie
 
 ## 🚀 Funkcje
 
-- 📷 Skanowanie kodów kreskowych (EAN13 i inne)
+- 📷 Skanowanie kodów kreskowych (EAN13 i inne) - Nie używane
 - ✍️ Wprowadzanie danych: indeks, ilość, lokalizacja
 - 🧠 Kojarzenie kodów z nazwami produktów z załadowanych plików CSV
 - 💾 Zapisywanie danych lokalnie (`localStorage`)
@@ -22,10 +22,10 @@ Prosta aplikacja do inwentaryzacji oparta na Vue 3 + Vite. Umożliwia skanowanie
 
 ```bash
 # 1. Sklonuj repozytorium
-git clone https://github.com/TwojeKonto/inwentaryzacja-app.git
+git clone https://github.com/ogamador/inwentaryzacjaVUEVITE.git
 
 # 2. Wejdź do katalogu
-cd inwentaryzacja-app
+cd inwentaryzacjaVUEVITE
 
 # 3. Zainstaluj zależności
 npm install
@@ -44,14 +44,6 @@ Aplikacja będzie dostępna pod adresem: `http://localhost:5173`
 1. Wejdź na [https://vercel.com](https://vercel.com) i połącz konto GitHub
 2. Wybierz to repozytorium i kliknij **Deploy**
 3. Vercel automatycznie rozpozna Vite i skonfiguruje środowisko
-
-### ✅ Alternatywnie: Netlify
-1. Uruchom build:
-   ```bash
-   npm run build
-   ```
-2. Wejdź na [https://app.netlify.com/drop](https://app.netlify.com/drop)
-3. Przeciągnij folder `dist/`
 
 ---
 
