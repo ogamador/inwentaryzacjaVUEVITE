@@ -68,8 +68,14 @@ button:focus-visible {
 
 .inventory-table {
   border-collapse: collapse;
+  min-width: 700px;
   width: 100%;
   margin-top: 1rem;
+}
+
+.inventory-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .inventory-table th,
