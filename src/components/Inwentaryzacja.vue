@@ -4,52 +4,50 @@
     <button @click="clearAll">🗑 Wyczyść wszystkie dane</button>
     <button @click="exportToCSV">💾 Eksportuj do CSV</button>
 
-    <div class="inventory-table-wrapper">
-      <table class="inventory-table">
-        <thead>
-          <tr>
-            <th @click="sortBy('lp')">Lp</th>
-            <th @click="sortBy('indeks')">Indeks</th>
-            <th @click="sortBy('nazwa')">Nazwa</th>
-            <th>Ilość</th>
-            <th @click="sortBy('lokalizacja')">Lokalizacja</th>
-            <th @click="sortBy('czas')">Czas</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <InwentaryTableRow
-            v-for="(row, i) in sortedRows"
-            :key="i"
-            :row="row"
-            :index="i"
-            :editingState="editState"
-            :updateRowName="updateNazwa"
-            @edit="editCell"
-            @stop-edit="stopEdit"
-            @delete="(i) => rows.splice(i, 1)"
-          />
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th @click="sortBy('lp')">Lp</th>
+          <th @click="sortBy('indeks')">Indeks</th>
+          <th @click="sortBy('nazwa')">Nazwa</th>
+          <th>Ilość</th>
+          <th @click="sortBy('lokalizacja')">Lokalizacja</th>
+          <th @click="sortBy('czas')">Czas</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <InwentaryTableRow
+          v-for="(row, i) in sortedRows"
+          :key="i"
+          :row="row"
+          :index="i"
+          :editingState="editState"
+          :updateRowName="updateNazwa"
+          @edit="editCell"
+          @stop-edit="stopEdit"
+          @delete="(i) => rows.splice(i, 1)"
+        />
 
-          <tr>
-            <td>{{ rows.length + 1 }}</td>
-            <td>
-              <input
-                ref="indeksInput"
-                v-model="current.indeks"
-                @keyup.enter="onIndeksEntered"
-                @focus="onInputFocus"
-                autofocus
-              />
-            </td>
-            <td>{{ current.nazwa }}</td>
-            <td><input v-model.number="current.ilosc" @keyup.enter="onIloscEntered" /></td>
-            <td><input v-model="current.lokalizacja" @keyup.enter="onLokalizacjaEntered" /></td>
-            <td>{{ formatDate(current.czas) }}</td>
-            <td><button @click="onLokalizacjaEntered">✅</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <tr>
+          <td>{{ rows.length + 1 }}</td>
+          <td>
+            <input
+              ref="indeksInput"
+              v-model="current.indeks"
+              @keyup.enter="onIndeksEntered"
+              @focus="onInputFocus"
+              autofocus
+            />
+          </td>
+          <td>{{ current.nazwa }}</td>
+          <td><input v-model.number="current.ilosc" @keyup.enter="onIloscEntered" /></td>
+          <td><input v-model="current.lokalizacja" @keyup.enter="onLokalizacjaEntered" /></td>
+          <td>{{ formatDate(current.czas) }}</td>
+          <td><button @click="onLokalizacjaEntered">✅</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
