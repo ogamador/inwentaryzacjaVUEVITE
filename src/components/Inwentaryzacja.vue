@@ -38,6 +38,11 @@
               @keyup.enter="onIndeksEntered"
               @focus="onInputFocus"
               autofocus
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
             />
           </td>
           <td>{{ current.nazwa }}</td>
