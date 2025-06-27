@@ -52,11 +52,14 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 import { saveAs } from 'file-saver'
 import InwentaryTableRow from './InwentaryTableRow.vue'
 
 const { kodToIndeks, indeksToNazwa } = defineProps(['kodToIndeks', 'indeksToNazwa'])
+
+let lastClipboard = ''
+let clipboardInterval
 
 const STORAGE_KEY = 'inwentaryzacjaRows'
 const rows = ref([])
@@ -97,8 +100,10 @@ function sortBy(key) {
 }
 
 onMounted(() => {
+  // 🔹 Focusuj pole indeksu na start
   indeksInput.value?.focus()
 
+  // 🔹 Wczytaj dane z localStorage
   const saved = localStorage.getItem(STORAGE_KEY)
   if (saved) {
     try {
@@ -108,13 +113,38 @@ onMounted(() => {
     }
   }
 
-  // obsługa focusu dla skanera
+  // 🔹 Utrzymuj focus gdy znika (dla skanera)
   window.addEventListener('keydown', (e) => {
     const tag = document.activeElement?.tagName
     if (tag !== 'INPUT') {
       indeksInput.value?.focus()
     }
   })
+
+  // 🔹 Interval: nasłuchiwanie schowka (clipboard API)
+  clipboardInterval = setInterval(async () => {
+    try {
+      const text = await navigator.clipboard.readText()
+      if (text && text !== lastClipboard) {
+        lastClipboard = text
+        if (text.length === 13) {
+          // kod EAN → indeks
+          current.value.indeks = text
+          onIndeksEntered()
+        } else {
+          // lokalizacja
+          current.value.lokalizacja = text
+          onLokalizacjaEntered()
+        }
+      }
+    } catch (err) {
+      // brak uprawnień do clipboarda – zignoruj
+    }
+  }, 1000)
+})
+
+onUnmounted(() => {
+  clearInterval(clipboardInterval)
 })
 
 watch(rows, (newRows) => {
