@@ -41,7 +41,13 @@
             />
           </td>
           <td>{{ current.nazwa }}</td>
-          <td><input v-model.number="current.ilosc" @keyup.enter="onIloscEntered" /></td>
+          <td><input
+            v-model.number="current.ilosc"
+            @keyup.enter="onIloscEntered"
+            @focus="e => e.target.select()"
+            type="number"
+            inputmode="numeric"
+            pattern="[0-9]*"/></td>
           <td><input v-model="current.lokalizacja" @keyup.enter="onLokalizacjaEntered" /></td>
           <td>{{ formatDate(current.czas) }}</td>
           <td><button @click="onLokalizacjaEntered">✅</button></td>
