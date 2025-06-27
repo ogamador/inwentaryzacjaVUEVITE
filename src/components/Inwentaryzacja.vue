@@ -187,17 +187,31 @@ function exportToCSV() {
     alert('Brak danych do eksportu.')
     return
   }
-  const headers = ['Lp', 'Indeks', 'Nazwa', 'Ilość', 'Lokalizacja', 'Czas']
+  const headers = ['Zeskanowany Indeks', 'Symbol', 'Nazwa', 'Ilość', 'Lp', 'Lokalizacja', 'Czas']
   const csvContent = [
     headers.join(';'),
-    ...rows.value.map(row => [
-      row.lp,
-      row.indeks,
-      row.nazwa,
-      row.ilosc,
-      row.lokalizacja,
-      formatDate(row.czas)
-    ].join(';'))
+    ...rows.value.map(row => {
+      const zeskanowanyIndeks = `="${row.indeks}"`
+      let symbol = row.indeks
+      let nazwa = row.nazwa
+
+      if (kodToIndeks.has(row.indeks)) {
+        symbol = kodToIndeks.get(row.indeks)
+        nazwa = indeksToNazwa.get(symbol) || row.nazwa
+      }
+
+      const symbolFormatted = `="${symbol}"`
+
+      return [
+        zeskanowanyIndeks,
+        symbolFormatted,
+        nazwa,
+        row.ilosc,
+        row.lp,
+        row.lokalizacja,
+        formatDate(row.czas)
+      ].join(';')
+    })
   ].join('\n')
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
